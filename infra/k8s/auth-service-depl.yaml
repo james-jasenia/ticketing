@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: auth-service
+  name: auth-service-depl
 spec:
   replicas: 1
   selector:
@@ -20,12 +20,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: auth-service-srv
+  name: auth-service-clusterip-srv
 spec:
+  type: ClusterIP
   selector:
-    app: auth-service-srv
+    app: auth-service
   ports:
-  - name: auth-service-srv
+  - name: auth-service
     protocol: TCP
     port: 3000
     targetPort: 3000
