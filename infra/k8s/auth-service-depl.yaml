@@ -20,12 +20,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: auth-service
+  name: auth-service-srv
 spec:
   selector:
-    app: auth-service
+    app: auth-service-srv
   ports:
-  - name: auth-service
+  - name: auth-service-srv
     protocol: TCP
     port: 3000
     targetPort: 3000
