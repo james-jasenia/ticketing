@@ -4,20 +4,16 @@ metadata:
   name: ingress-service
   annotations:
     nginx.ingress.kubernetes.io/use-regex: "true"
-  labels:
-    name: ingress-service
 spec:
   ingressClassName: nginx
   rules:
-  - host: ticketing.com
-    http:
-      paths:
-      - path: /api/users/?(.*)
-        pathType: ImplementationSpecific
-        backend:
-          service:
-            name: auth-service-clusterip-srv
-            port: 
-              number: 3000
-
-
+    - host: ticketing.dev
+      http:
+        paths:
+          - path: /api/users/?(.*)
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: auth-service-clusterip-srv
+                port:
+                  number: 3000
