@@ -1,5 +1,6 @@
 class DatabaseConnectionError extends Error {
 
+    statusCode = 500;
     reason = 'Error connecting to database';
 
     constructor() {
@@ -7,6 +8,12 @@ class DatabaseConnectionError extends Error {
 
         // This is only required when dealing with JS built in types. Without it, console.log(err instanceof RequestValidationError); could return false. - Very important to keep in mind and something that is easily forgotten.
         Object.setPrototypeOf(this, DatabaseConnectionError.prototype)
+    }
+
+    serialiseErrors()  {
+        return [
+            { message: this.reason }
+        ];
     }
 }
 

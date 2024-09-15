@@ -9,17 +9,11 @@ function errorHandler(
     next: NextFunction
 ) {
     if(err instanceof RequestValidationError) {
-        const formattedErros = err.errors.map(error => {
-            if (error.type === 'field') {
-                return { message: error.msg, field: error.path }
-            }
-        });
-
-        res.status(400).send({ errors: formattedErros });
+        res.status(err.statusCode).send({ errors: err.serialiseErrors() });
     }
 
     if (err instanceof DatabaseConnectionError) {
-        res.status(500).send({ error: [{ message: err.reason }] });
+        res.status(err.statusCode).send({ error: err.serialiseErrors() });
     }
 
     res.status(200).send({});
