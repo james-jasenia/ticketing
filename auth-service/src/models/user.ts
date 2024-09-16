@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import Password from "../services/password";
 
 // Typescript's type checking and Mongoose require a bit of massaging.
 // An interface to provide type checking in a  User factory method.
@@ -28,6 +29,14 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true
     }
+});
+
+userSchema.pre('save', async function(done) {
+   if (this.isModified('password')) {
+    const hashed = await Password.toHash(this.get('password'));
+    this.set('password', hashed);
+   }
+    done();
 });
 
 userSchema.statics.build = (attrs: UserAttrs) => {
