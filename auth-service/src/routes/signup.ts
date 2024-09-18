@@ -38,9 +38,11 @@ router.post('/api/users/signup', validator, async (req: Request, res: Response) 
     await user.save();
 
     const userJwt = jwt.sign({
-        id: user.id,
-        email: user.email
-    }, 'anySecretKey');
+            id: user.id,
+            email: user.email
+        },
+        process.env.JWT_KEY! // Start function has a check for the JWT_KEY. This is a force unwrap.
+    );
 
     req.session = {
         jwt: userJwt
