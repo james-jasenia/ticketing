@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 import Password from "../services/password";
 
 // Typescript's type checking and Mongoose require a bit of massaging.
-// An interface to provide type checking in a  User factory method.
+// An interface to provide type checking in a User factory method.
 interface UserAttrs {
     email: string;
     password: string;
