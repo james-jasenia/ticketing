@@ -11,7 +11,7 @@ it('returns a 201 on successful signup', async () => {
         .expect(201)
 })
 
-it('returns a 400 with an invalid email', async () => {
+it('returns a 400 given an invalid email', async () => {
     return request(app)
         .post('/api/users/signup')
         .send({
@@ -21,7 +21,7 @@ it('returns a 400 with an invalid email', async () => {
         .expect(400)
 })
 
-it('returns a 400 with an invalid password', async () => {
+it('returns a 400 given an invalid password', async () => {
     return request(app)
         .post('/api/users/signup')
         .send({
@@ -31,7 +31,7 @@ it('returns a 400 with an invalid password', async () => {
         .expect(400)
 })
 
-it('returns a 400 with missing email', async () => {
+it('returns a 400 given a missing email', async () => {
     return request(app)
         .post('/api/users/signup')
         .send({
@@ -40,11 +40,18 @@ it('returns a 400 with missing email', async () => {
         .expect(400)
 })
 
-it('returns a 400 with missing password', async () => {
+it('returns a 400 given a missing password', async () => {
     return request(app)
         .post('/api/users/signup')
         .send({
             email: 'test@test.com'
         })
+        .expect(400)
+})
+
+it('returns a 400 given an empty body', async () => {
+    return request(app)
+        .post('/api/users/signup')
+        .send({})
         .expect(400)
 })
