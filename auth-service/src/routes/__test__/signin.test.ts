@@ -45,3 +45,63 @@ it('returns a 400 when an incorrect password is supplied', async () => {
         ]
     });
 })
+
+it('it responds with a cookie after successful signin', async () => {
+    await request(app)
+        .post('/api/users/signup')
+        .send({
+            email: 'test@test.com',
+            password: 'password'
+        })
+        .expect(201)
+
+    const response = await request(app)
+        .post('/api/users/signin')
+        .send({
+            email: 'test@test.com',
+            password: 'password'
+        })
+        .expect(200)
+
+    expect(response.get('Set-Cookie')).toBeDefined();
+})
+
+it('it returns with the users email on successful signin', async () => {
+    await request(app)
+        .post('/api/users/signup')
+        .send({
+            email: 'test@test.com',
+            password: 'password'
+        })
+        .expect(201)
+
+    const response = await request(app)
+        .post('/api/users/signin')
+        .send({
+            email: 'test@test.com',
+            password: 'password'
+        })
+        .expect(200)
+
+    expect(response.body.email).toEqual('test@test.com')
+})
+
+it('it returns with an id on successful signin', async () => {
+    await request(app)
+        .post('/api/users/signup')
+        .send({
+            email: 'test@test.com',
+            password: 'password'
+        })
+        .expect(201)
+
+    const response = await request(app)
+        .post('/api/users/signin')
+        .send({
+            email: 'test@test.com',
+            password: 'password'
+        })
+        .expect(200)
+
+    expect(response.body.id).toBeDefined();
+})
