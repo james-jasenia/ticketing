@@ -18,3 +18,30 @@ it('returns a 400 with an error array when an email that does not exist is suppl
         ]
     });
 })
+
+it('returns a 400 when an incorrect password is supplied', async () => {
+    await request(app)
+        .post('/api/users/signup')
+        .send({
+            email: 'test@test.com',
+            password: 'password'
+        })
+        .expect(201)
+
+    const response = await request(app)
+        .post('/api/users/signin')
+        .send({
+            email: 'test@test.com',
+            password: 'incorrectPassword'
+        })
+        .expect(400)
+
+
+    expect(response.body).toEqual({
+        errors: [
+            {
+                message: "Invalid credentials"
+            }
+        ]
+    });
+})
