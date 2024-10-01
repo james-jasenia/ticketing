@@ -8,9 +8,8 @@ import { signinRouter } from './routes/signin';
 import { signoutRouter } from './routes/signout';
 import { signupRouter } from './routes/signup';
 
-import errorHandler from './middlewares/error-handler';
+import { errorHandler, NotFoundError } from '@jjgittix/common';
 
-import NotFoundError from './errors/not-found-error';
 
 const app = express();
 app.set('trust proxy', true); // ingress-nginx is acting as a proxy

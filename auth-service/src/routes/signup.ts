@@ -4,8 +4,7 @@ import jwt from 'jsonwebtoken';
 
 import User from '../models/user';
 
-import BadRequestError from '../errors/bad-request-error';
-import validateReqest from '../middlewares/validate-request';
+import { BadRequestError, validateReqest } from '@jjgittix/common';
 
 const router = express.Router();
 
