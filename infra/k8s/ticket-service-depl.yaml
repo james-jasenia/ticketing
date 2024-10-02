@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: auth-service-depl
+  name: ticket-service-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: auth-service
+      app: ticket-service
   template:
     metadata:
       labels:
-        app: auth-service
+        app: ticket-service
     spec:
       containers:
-        - name: auth-service
-          image: jamesjasenia/auth-service
+        - name: ticket-service
+          image: jamesjasenia/ticket-service
           env:
             - name: MONGO_URI
-              value: mongodb://auth-service-mongo-clusterip-srv:27017/auth
+              value: mongodb://ticket-service-mongo-clusterip-srv:27017/ticket
             - name: JWT_KEY
               valueFrom: 
                 secretKeyRef: 
@@ -28,13 +28,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: auth-service-clusterip-srv
+  name: ticket-service-clusterip-srv
 spec:
   type: ClusterIP
   selector:
-    app: auth-service
+    app: ticket-service
   ports:
-  - name: auth-service
+  - name: ticket-service
     protocol: TCP
     port: 3000
     targetPort: 3000
