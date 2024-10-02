@@ -3,8 +3,7 @@ import 'express-async-errors';
 import { json } from 'body-parser';
 import cookieSession from 'cookie-session';
 import { createTicketRouter } from './routes/create-ticket';
-
-import { errorHandler, NotFoundError } from '@jjgittix/common';
+import { errorHandler, NotFoundError, currentUser } from '@jjgittix/common';
 
 
 const app = express();
@@ -17,6 +16,7 @@ app.use(
     })
 )
 
+app.use(currentUser);
 app.use(createTicketRouter);
 
 app.all('*', async () => {

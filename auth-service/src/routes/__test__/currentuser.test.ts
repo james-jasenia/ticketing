@@ -1,6 +1,6 @@
 import request from 'supertest';
 import { app } from '../../app';
-import signUpReturnCookie from '../../test/signun-return-cookie-helper';
+import signUpReturnCookie from '../../test/signin-return-cookie-helper';
 
 it('responds with details about the current user', async () => {
     const cookie = await signUpReturnCookie();
