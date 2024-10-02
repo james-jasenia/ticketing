@@ -2,6 +2,7 @@ import express from 'express';
 import 'express-async-errors';
 import { json } from 'body-parser';
 import cookieSession from 'cookie-session';
+import { createTicketRouter } from './routes/create-ticket';
 
 import { errorHandler, NotFoundError } from '@jjgittix/common';
 
@@ -15,6 +16,8 @@ app.use(
         secure: process.env.NODE_ENV !== 'test' // Not ideal.
     })
 )
+
+app.use(createTicketRouter);
 
 app.all('*', async () => {
     throw new NotFoundError();
