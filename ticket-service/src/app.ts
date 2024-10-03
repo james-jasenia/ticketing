@@ -4,6 +4,8 @@ import { json } from 'body-parser';
 import cookieSession from 'cookie-session';
 import { createTicketRouter } from './routes/create-ticket';
 import { errorHandler, NotFoundError, currentUser } from '@jjgittix/common';
+import { showTicketRouter } from './routes/show-ticket';
+import { indexRouter } from './routes';
 
 
 const app = express();
@@ -18,7 +20,8 @@ app.use(
 
 app.use(currentUser);
 app.use(createTicketRouter);
-
+app.use(showTicketRouter);
+app.use(indexRouter);
 app.all('*', async () => {
     throw new NotFoundError();
 });
