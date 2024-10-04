@@ -2,6 +2,7 @@ import request from 'supertest';
 import { app } from '../../app';
 import signUpReturnCookie from '../../test/signin-return-cookie-helper';
 import { Ticket } from '../../models/ticket';
+
 it('has a route handler listening to /api/tickets for post requests', async () => {
     const response = await request(app).post('/api/tickets').send({});
     expect(response.status).not.toEqual(404);

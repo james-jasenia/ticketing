@@ -6,6 +6,7 @@ import { createTicketRouter } from './routes/create-ticket';
 import { errorHandler, NotFoundError, currentUser } from '@jjgittix/common';
 import { showTicketRouter } from './routes/show-ticket';
 import { indexRouter } from './routes';
+import { updateTicketRouter } from './routes/update-ticket';
 
 
 const app = express();
@@ -22,6 +23,7 @@ app.use(currentUser);
 app.use(createTicketRouter);
 app.use(showTicketRouter);
 app.use(indexRouter);
+app.use(updateTicketRouter);
 app.all('*', async () => {
     throw new NotFoundError();
 });
