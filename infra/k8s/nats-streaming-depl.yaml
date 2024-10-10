@@ -18,15 +18,15 @@ spec:
         - name: nats-streaming
           image: nats-streaming:0.17.0
           args: [
-              '-p',
+              '-p',     # Port for the NATS server (listening for client connections)
               '4222',
               '-m',
               '8222',
-              '-hbi',
+              '-hbi',   # Heartbeat Interval: time between heartbeat pings to clients
               '5s',
-              '-hbt',
+              '-hbt',   # Heartbeat Timeout: time to wait for a response from a client
               '5s',
-              '-hbf',
+              '-hbf',    # Heartbeat Failures: number of failed heartbeats before considering a client disconnected
               '2',
               '-SD',
               '-cid',
