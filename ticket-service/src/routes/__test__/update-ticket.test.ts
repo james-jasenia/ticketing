@@ -3,6 +3,7 @@ import { app } from "../../app";
 import { Ticket } from "../../models/ticket";
 import mongoose from "mongoose";
 import signUpReturnCookie from "../../test/signin-return-cookie-helper";
+import { natsWrapper } from "../../nats-wrapper";
 
 it('returns a 401 if the user is not authenticated', async () => {
     const id = new mongoose.Types.ObjectId().toHexString();
@@ -143,4 +144,29 @@ it('updates a ticket if the provided ticket id is valid', async () => {
 
     expect(ticketResponse.body.title).toEqual('new title');
     expect(ticketResponse.body.price).toEqual(100);
+});
+
+it('publishes an event', async () => {
+    const cookie = await signUpReturnCookie();
+
+    const response = await request(app)
+        .post('/api/tickets')
+        .set('Cookie', cookie)
+        .send({
+            title: 'test',
+            price: 10
+        });
+
+    const ticketId = response.body.id;
+
+    const updateResponse = await request(app)
+        .put(`/api/tickets/${ticketId}`)
+        .set('Cookie', cookie)
+        .send({
+            title: 'new title',
+            price: 100
+        });
+
+    expect(updateResponse.status).toEqual(200);
+    expect(natsWrapper.client.publish).toHaveBeenCalled()
 });
