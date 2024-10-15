@@ -1,5 +1,5 @@
 {
-  "name": "ticket-service",
+  "name": "orders-service",
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
