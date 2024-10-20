@@ -2,11 +2,12 @@ import express from 'express';
 import 'express-async-errors';
 import { json } from 'body-parser';
 import cookieSession from 'cookie-session';
-import { createTicketRouter } from './routes/create-ticket';
 import { errorHandler, NotFoundError, currentUser } from '@jjgittix/common';
-import { showTicketRouter } from './routes/show-ticket';
-import { indexRouter } from './routes';
-import { updateTicketRouter } from './routes/update-ticket';
+
+import { createOrderRouter } from './routes/create-order';
+import { deleteOrderRouter } from './routes/delete-order';
+import { indexOrderRouter } from './routes';
+import { showOrderRouter } from './routes/show-order';
 
 
 const app = express();
@@ -19,11 +20,10 @@ app.use(
     })
 )
 
-app.use(currentUser);
-app.use(createTicketRouter);
-app.use(showTicketRouter);
-app.use(indexRouter);
-app.use(updateTicketRouter);
+app.use(createOrderRouter);
+app.use(deleteOrderRouter);
+app.use(indexOrderRouter);
+app.use(showOrderRouter);
 app.all('*', async () => {
     throw new NotFoundError();
 });

@@ -19,7 +19,7 @@ spec:
             - name: NATS_URL
               value: 'http://nats-streaming-clusterip-srv:4222'
             - name: NATS_CLUSTER_ID
-              value: orders
+              value: ticketing
             - name: NATS_CLIENT_ID
               valueFrom:
                 fieldRef:
