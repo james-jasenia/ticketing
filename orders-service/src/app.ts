@@ -20,6 +20,7 @@ app.use(
     })
 )
 
+app.use(currentUser);
 app.use(createOrderRouter);
 app.use(deleteOrderRouter);
 app.use(indexOrderRouter);
