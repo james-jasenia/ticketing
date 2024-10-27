@@ -8,7 +8,7 @@ import { Ticket } from '../../models/ticket';
 import { OrderStatus } from '@jjgittix/common';
 
 
-it('has a route handler listening to /api/tickets for post requests', async () => {
+it('has a route handler listening to /api/orders for post requests', async () => {
     const ticketId = new mongoose.Types.ObjectId();
 
     const response = await request(app)
@@ -112,4 +112,21 @@ it('returns a ticket if the ticket has successfully been reserved', async () => 
     expect(response.status).toEqual(201);
 });
 
-it.todo('it emits an event')
+it('emits an order created event', async () => {
+    const ticket = Ticket.build({
+        title: 'any title',
+        price: 10
+    })
+
+    await ticket.save();
+
+    const cookie = await signUpReturnCookie();
+
+    const response = await request(app)
+        .post('/api/orders')
+        .set('Cookie', cookie)
+        .send({ ticketId: ticket.id });
+
+    expect(response.status).toEqual(201);
+    expect(natsWrapper.client.publish).toHaveBeenCalled();
+});
