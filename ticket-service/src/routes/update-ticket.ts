@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { NotFoundError, requireAuth, validateRequest, NotAuthorisedError } from '@jjgittix/common';
+import { NotFoundError, requireAuth, validateRequest, NotAuthorisedError, BadRequestError } from '@jjgittix/common';
 import { body } from 'express-validator';
 import { Ticket } from '../models/ticket';
 import TicketUpdatedPublisher from '../events/publishers/ticket-updated-publisher';
@@ -19,6 +19,11 @@ router.put('/api/tickets/:id', requireAuth, validator, validateRequest, async (r
         throw new NotFoundError();
     }
 
+    // Tickets that have an orderId are reserved.
+    if (ticket.orderId) {
+        throw new BadRequestError('Cannot edit reserved ticket');
+    }
+
     if (req.currentUser!.id !== ticket.userId) {
         throw new NotAuthorisedError();
     }
@@ -34,7 +39,8 @@ router.put('/api/tickets/:id', requireAuth, validator, validateRequest, async (r
         id: ticket.id,
         title: ticket.title,
         price: ticket.price,
-        userId: ticket.userId
+        userId: ticket.userId,
+        version: ticket.version
     })
 
     res.send(ticket);

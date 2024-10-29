@@ -5,9 +5,11 @@ import signUpReturnCookie from "../../test/signin-return-cookie-helper";
 import { OrderStatus } from '@jjgittix/common';
 import { Order } from '../../models/order';
 import { natsWrapper } from '../../nats-wrapper';
+import mongoose from 'mongoose';
 
 it('marks an order as cancelled', async () => {
     const ticket = await Ticket.build({
+        id: new mongoose.Types.ObjectId().toHexString(),
         title: 'title',
         price: 10
     })
@@ -35,6 +37,7 @@ it('marks an order as cancelled', async () => {
 
 it('emits an order cancelled event', async () => {
     const ticket = await Ticket.build({
+        id: new mongoose.Types.ObjectId().toHexString(),
         title: 'title',
         price: 10
     })
