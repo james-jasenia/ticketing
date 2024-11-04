@@ -2,12 +2,8 @@ import express from 'express';
 import 'express-async-errors';
 import { json } from 'body-parser';
 import cookieSession from 'cookie-session';
-import { createTicketRouter } from './routes/create-ticket';
 import { errorHandler, NotFoundError, currentUser } from '@jjgittix/common';
-import { showTicketRouter } from './routes/show-ticket';
-import { indexRouter } from './routes';
-import { updateTicketRouter } from './routes/update-ticket';
-
+import { createChargeRouter } from '../routes/new';
 
 const app = express();
 app.set('trust proxy', true); // ingress-nginx is acting as a proxy
@@ -20,10 +16,8 @@ app.use(
 )
 
 app.use(currentUser);
-app.use(createTicketRouter);
-app.use(showTicketRouter);
-app.use(indexRouter);
-app.use(updateTicketRouter);
+app.use(createChargeRouter);
+
 app.all('*', async () => {
     throw new NotFoundError();
 });
