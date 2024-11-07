@@ -3,6 +3,7 @@ import { app } from './app';
 import { natsWrapper } from './nats-wrapper';
 import OrderCancelledListener from './events/listeners/order-cancelled-listener';
 import OrderCreatedListener from './events/listeners/order-created-listener';
+import PaymentCreatedListener from '../../orders-service/src/events/listeners/payment-created-listener';
 
 const start = async () => {
     if (!process.env.JWT_KEY) {

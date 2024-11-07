@@ -3,7 +3,7 @@ import 'express-async-errors';
 import { json } from 'body-parser';
 import cookieSession from 'cookie-session';
 import { errorHandler, NotFoundError, currentUser } from '@jjgittix/common';
-import { createChargeRouter } from '../routes/new';
+import { createChargeRouter } from './routes/new';
 
 const app = express();
 app.set('trust proxy', true); // ingress-nginx is acting as a proxy
