@@ -4,7 +4,7 @@ import jwt from 'jsonwebtoken';
 
 import User from '../models/user';
 
-import { BadRequestError, validateReqest } from '@jjgittix/common';
+import { BadRequestError, validateRequest } from '@jjgittix/common';
 
 const router = express.Router();
 
@@ -18,7 +18,7 @@ const validator = [
         .withMessage('Password must be between 4 and 20 characters'),
 ]
 
-router.post('/api/users/signup', validator, validateReqest, async (req: Request, res: Response) => {
+router.post('/api/users/signup', validator, validateRequest, async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
     const existingUser = await User.findOne({ email })

@@ -1,6 +1,6 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
-import { validateReqest, BadRequestError } from '@jjgittix/common';
+import { validateRequest, BadRequestError } from '@jjgittix/common';
 import User from '../models/user';
 import Password from '../services/password';
 import jwt from 'jsonwebtoken';
@@ -17,7 +17,7 @@ body('password')
     .withMessage('You must supply a password')
 ]
 
-router.post('/api/users/signin', validator, validateReqest, async (req: Request, res: Response) => {
+router.post('/api/users/signin', validator, validateRequest, async (req: Request, res: Response) => {
     const { email, password } = req.body;
 
     const existingUser = await User.findOne({ email });
